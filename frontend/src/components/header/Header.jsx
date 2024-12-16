@@ -14,7 +14,7 @@ function Header() {
 
   return (
     <div className="header bg-white">
-      <div className="header mx-8 lg:mx-10 my-2">
+      <div className="header ml-8 mr-0 lg:mx-10 my-2">
         <div className="flex justify-between place-items-center">
           <div className="logo flex place-items-center basis-1/3 ml-4 lg:ml-0">
             <div className="image">
