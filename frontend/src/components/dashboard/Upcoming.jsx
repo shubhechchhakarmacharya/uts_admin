@@ -27,7 +27,7 @@ function Upcoming() {
   ];
   return (
     <>
-      <div className="right basis-1/4">
+      <div className="right basis-4/12">
         <div className="text font-semibold text-xl pl-1.5">
           Upcoming Holidays
         </div>

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Card from "./Card";
 import weather from "/weather.svg";
 import grow from "/grow.svg";
 import add from "/add.svg";
 import low from "/low.svg";
-add;
 import time from "/time.svg";
 import cloud_time from "/cloud_time.svg";
 import call from "/call.svg";
+import travel from "/travel.svg";
+import remaining from "/remaining.svg";
+import publish from "/publish.svg";
+import pending from "/pending.svg";
+import expiry from "/expiry.svg";
 import edit from "/edit.svg";
 import birthday from "/birthday.svg";
 import emergency from "/emergency.svg";
@@ -15,6 +20,7 @@ import exchange from "/exchange.svg";
 import Upcoming from "./Upcoming";
 import Attendance from "./Attendance";
 import Leave from "./Leave";
+import Attendance_all from "./Attendance_all";
 
 // const fetchWeatherData = async (apiKey) => {
 //   const response = await fetch(
@@ -27,6 +33,7 @@ import Leave from "./Leave";
 //   };
 // };
 function Features() {
+  const location = useLocation();
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -88,6 +95,54 @@ function Features() {
       label: "Exchange Rate 2024-12-02",
       className: "exchange",
     },
+    {
+      number: 5,
+      icon: travel,
+      label: "Travel Request",
+      className: "travel_request",
+      subtextIcon: "/grow.svg",
+      subtext: "5 new travel request",
+    },
+    {
+      number: 1,
+      icon: expiry,
+      label: "Insurance Expiry",
+      className: "insurance_expiry",
+      subtext: "1 insurance expired",
+      subtextIcon: low,
+    },
+    {
+      number: 3,
+      icon: exchange,
+      label: "Documents Expiry",
+      className: "document_expiry",
+      subtext: "3 documents expired",
+      subtextIcon: low,
+    },
+    {
+      number: 6,
+      icon: remaining,
+      label: "Probation Remaining",
+      className: "probation_remaining",
+      subtextIcon: "/grow.svg",
+      subtext: "6 probation remaining",
+    },
+    {
+      number: 1,
+      icon: pending,
+      label: "Leave Approval Pending",
+      className: "leave_approval_pending",
+      subtextIcon: low,
+      subtext: "1 leave approval pending",
+    },
+    {
+      number: 0,
+      icon: publish,
+      label: "Vacancy Publish",
+      className: "vacancy_publish",
+      subtextIcon: low,
+      subtext: "No vacancy published",
+    },
   ];
 
   // const [weatherData, setWeatherData] = useState({
@@ -119,7 +174,7 @@ function Features() {
       <div className="features px-4 sm:px-10 pb-10 ">
         <div className="dashboard">
           <div className=" main flex flex-col lg:flex-row gap-5 lg:gap-16">
-            <div className="left w-full lg:basis-3/4">
+            <div className="left w-full lg:3/4">
               <div className="text font-semibold text-xl pl-1.5">Dashboard</div>
               <div className="flex flex-col lg:flex-row gap-1 lg:gap-10">
                 <div className="weather w-full sm:basis-1/3 place-items-center mt-5">
@@ -185,6 +240,7 @@ function Features() {
                   ))}
                 </div>
               </div>
+
               <div className="flex flex-col lg:flex-row mt-1 lg:mt-5 gap-1 lg:gap-10">
                 {cardData.slice(4, 7).map((card, index) => (
                   <div
@@ -200,13 +256,64 @@ function Features() {
                   </div>
                 ))}
               </div>
+
+              {location.pathname === "/dashboard_admin" && (
+                <div className="flex flex-col lg:flex-row mt-1 lg:mt-5 gap-1 lg:gap-10">
+                  {cardData.slice(7, 10).map((card, index) => (
+                    <div
+                      className={`mainbox w-full sm:basis-1/3 text-primaryColor ${card.className}`}
+                      key={index}
+                    >
+                      <Card
+                        number={card.number}
+                        icon={card.icon}
+                        label={card.label}
+                        subtext={card.subtext}
+                        subtextIcon={card.subtextIcon}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {location.pathname === "/dashboard_admin" && (
+                <div className="flex flex-col lg:flex-row mt-1 lg:mt-5 gap-1 lg:gap-10">
+                  {cardData.slice(10, 13).map((card, index) => (
+                    <div
+                      className={`mainbox w-full sm:basis-1/3 text-primaryColor ${card.className}`}
+                      key={index}
+                    >
+                      <Card
+                        number={card.number}
+                        icon={card.icon}
+                        label={card.label}
+                        subtext={card.subtext}
+                        subtextIcon={card.subtextIcon}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            <Upcoming />
+            {location.pathname === "/dashboard_admin" ? (
+              <div className="flex flex-col gap-8 ">
+                {" "}
+                <Upcoming /> <Leave />{" "}
+              </div>
+            ) : (
+              <Upcoming />
+            )}
           </div>
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-16 mt-5 sm:mt-10">
-            <Attendance />
-            <Leave />
-          </div>
+          {location.pathname === "/dashboard_admin" ? (
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-16 mt-5 sm:mt-10">
+              {" "}
+              <Attendance /> <Attendance_all />{" "}
+            </div>
+          ) : (
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-16 mt-5 sm:mt-10">
+              <Attendance />
+              <Leave />
+            </div>
+          )}
         </div>
       </div>
     </>
